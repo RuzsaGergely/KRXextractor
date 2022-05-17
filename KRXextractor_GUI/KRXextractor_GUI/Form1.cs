@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using System.IO.Compression;
+using System.Diagnostics;
 
 namespace KRXextractor_GUI
 {
@@ -31,7 +32,7 @@ namespace KRXextractor_GUI
             // Checks and balances. Checks at least.
             if(textBox_selectedFile.Text.Length < 1)
             {
-                MessageBox.Show("Kérem válasszon ki egy fájlt!", "Hiba");
+                MessageBox.Show("Kérem válasszon ki egy fájlt!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 return;
             }
 
@@ -40,14 +41,14 @@ namespace KRXextractor_GUI
 
             if(Directory.Exists(Path.Combine(textBox_outputFolder.Text, new_folder_name)))
             {
-                MessageBox.Show("Nem tudtam létrehozni a mappát mert ezen a néven már létezik egy! Kérem törölje, vagy módosítsa a mentés helyét!", "Hiba");
+                MessageBox.Show("Nem tudtam létrehozni a mappát mert ezen a néven már létezik egy! Kérem törölje, vagy módosítsa a mentés helyét!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 return;
             }
             Directory.CreateDirectory(Path.Combine(textBox_outputFolder.Text, new_folder_temp));
 
             if (Directory.Exists(Path.Combine(textBox_outputFolder.Text, new_folder_name)))
             {
-                MessageBox.Show("Nem tudtam létrehozni az ideiglenes mappát mert ezen a néven már létezik egy! Kérem törölje, vagy módosítsa a mentés helyét!", "Hiba");
+                MessageBox.Show("Nem tudtam létrehozni az ideiglenes mappát mert ezen a néven már létezik egy! Kérem törölje, vagy módosítsa a mentés helyét!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 return;
             }
             Directory.CreateDirectory(Path.Combine(textBox_outputFolder.Text, new_folder_temp));
@@ -71,7 +72,7 @@ namespace KRXextractor_GUI
             // Deleting TEMP folder
             Directory.Delete(Path.Combine(textBox_outputFolder.Text, new_folder_temp), true);
 
-            MessageBox.Show("A kért csatolmány kitömörítésre került!", "Siker");
+            MessageBox.Show("A kért csatolmány kitömörítésre került!", "Siker", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void button_filePicker_Click(object sender, EventArgs e)
@@ -116,6 +117,16 @@ namespace KRXextractor_GUI
         {
             textBox_outputFolder.SelectionStart = textBox_outputFolder.Text.Length;
             textBox_outputFolder.SelectionLength = 0;
+        }
+
+        private void linkLabel_site_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("https://ruzger.hu");
+        }
+
+        private void linkLabel_github_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("https://github.com/RuzsaGergely/KRXextractor");
         }
     }
 }
